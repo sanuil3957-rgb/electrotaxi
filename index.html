@@ -3,174 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-    <title>Электро Такси — Реальные люди + Запомнить меня</title>
+    <title>Электро Такси — Живые обновления</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-        body {
-            background: #0a1424;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 16px;
-        }
-        .app {
-            max-width: 500px;
-            width: 100%;
-            background: #fff;
-            border-radius: 44px;
-            box-shadow: 0 30px 50px rgba(0,0,0,0.3);
-            overflow: hidden;
-            min-height: 720px;
-            display: flex;
-            flex-direction: column;
-        }
-        .header {
-            padding: 20px 20px 12px;
-            background: white;
-            border-bottom: 1px solid #eef2ff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo h2 {
-            font-size: 24px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #0b3b3f, #1e8f6e);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .role-switch {
-            background: #f0f4f9;
-            border-radius: 40px;
-            padding: 4px;
-            display: flex;
-            gap: 6px;
-        }
-        .role-btn {
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-            background: transparent;
-            border: none;
-            transition: 0.2s;
-        }
-        .role-btn.active {
-            background: #1e6f5c;
-            color: white;
-        }
-        .content {
-            flex: 1;
-            padding: 16px 20px;
-            overflow-y: auto;
-            max-height: 620px;
-        }
-        .card {
-            background: #f9fafc;
-            border-radius: 28px;
-            padding: 18px;
-            margin-bottom: 20px;
-            border: 1px solid #eef2ff;
-        }
-        .input-group {
-            margin-bottom: 14px;
-        }
-        .input-group label {
-            font-size: 13px;
-            font-weight: 600;
-            color: #334155;
-            display: block;
-            margin-bottom: 6px;
-        }
-        .input-group input, .input-group select, .input-group textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border-radius: 60px;
-            border: 1px solid #e2e8f0;
-            background: white;
-            font-size: 14px;
-        }
-        .btn {
-            background: #1e6f5c;
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 60px;
-            color: white;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-top: 8px;
-        }
-        .btn-outline {
-            background: transparent;
-            border: 1.5px solid #1e6f5c;
-            color: #1e6f5c;
-        }
-        .flex-between {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .badge {
-            font-size: 11px;
-            background: #e6f7f0;
-            padding: 4px 12px;
-            border-radius: 50px;
-            color: #1e6f5c;
-        }
-        .payment-method, .history-item {
-            background: white;
-            border-radius: 16px;
-            padding: 10px;
-            margin: 8px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid #e2e8f0;
-        }
-        .warning {
-            text-align: center;
-            color: #e67e22;
-            font-size: 13px;
-            margin-top: 12px;
-        }
-        .success {
-            color: #1e6f5c;
-            font-weight: 600;
-        }
-        hr {
-            margin: 12px 0;
-        }
-        .driver-menu {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 16px;
-        }
-        .driver-menu button {
-            flex: 1;
-            padding: 8px;
-            font-size: 12px;
-        }
-        .status-online {
-            color: #10b981;
-            font-weight: bold;
-        }
-        .status-offline {
-            color: #ef4444;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: #0a1424; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 16px; }
+        .app { max-width: 500px; width: 100%; background: #fff; border-radius: 44px; box-shadow: 0 30px 50px rgba(0,0,0,0.3); overflow: hidden; min-height: 720px; display: flex; flex-direction: column; }
+        .header { padding: 20px 20px 12px; background: white; border-bottom: 1px solid #eef2ff; display: flex; justify-content: space-between; align-items: center; }
+        .logo h2 { font-size: 24px; font-weight: 800; background: linear-gradient(135deg, #0b3b3f, #1e8f6e); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .role-switch { background: #f0f4f9; border-radius: 40px; padding: 4px; display: flex; gap: 6px; }
+        .role-btn { padding: 6px 16px; border-radius: 30px; font-weight: 600; font-size: 13px; cursor: pointer; background: transparent; border: none; transition: 0.2s; }
+        .role-btn.active { background: #1e6f5c; color: white; }
+        .content { flex: 1; padding: 16px 20px; overflow-y: auto; max-height: 620px; }
+        .card { background: #f9fafc; border-radius: 28px; padding: 18px; margin-bottom: 20px; border: 1px solid #eef2ff; }
+        .input-group { margin-bottom: 14px; }
+        .input-group label { font-size: 13px; font-weight: 600; color: #334155; display: block; margin-bottom: 6px; }
+        .input-group input, .input-group select { width: 100%; padding: 12px 16px; border-radius: 60px; border: 1px solid #e2e8f0; background: white; font-size: 14px; }
+        .btn { background: #1e6f5c; width: 100%; padding: 14px; border: none; border-radius: 60px; color: white; font-weight: 700; font-size: 16px; cursor: pointer; transition: 0.2s; margin-top: 8px; }
+        .btn-outline { background: transparent; border: 1.5px solid #1e6f5c; color: #1e6f5c; padding: 10px; border-radius: 60px; cursor: pointer; }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+        .badge { font-size: 11px; background: #e6f7f0; padding: 4px 12px; border-radius: 50px; color: #1e6f5c; }
+        .payment-method, .order-item { background: white; border-radius: 16px; padding: 10px; margin: 8px 0; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e2e8f0; }
+        .warning { text-align: center; color: #e67e22; font-size: 13px; margin-top: 12px; }
+        .success { color: #1e6f5c; font-weight: 600; }
+        hr { margin: 12px 0; }
+        .driver-menu { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+        .driver-menu button { flex: 1; padding: 8px; font-size: 12px; }
+        .status-online { color: #10b981; font-weight: bold; }
+        .status-offline { color: #ef4444; }
+        .active-ride { background: #e0f2e9; border-radius: 20px; padding: 14px; margin-top: 10px; }
+        .notification { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #1e6f5c; color: white; padding: 12px 24px; border-radius: 60px; z-index: 1000; animation: fadeOut 3s forwards; }
+        @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
     </style>
 </head>
 <body>
@@ -190,13 +54,45 @@
     let passengers = JSON.parse(localStorage.getItem('ev_taxi_passengers')) || [];
     let drivers = JSON.parse(localStorage.getItem('ev_taxi_drivers')) || [];
     let orders = JSON.parse(localStorage.getItem('ev_taxi_orders')) || [];
-    let completedTrips = JSON.parse(localStorage.getItem('ev_taxi_completed')) || []; // история для водителей
+    let completedTrips = JSON.parse(localStorage.getItem('ev_taxi_completed')) || [];
 
     let currentRole = 'passenger';
     let currentUserId = null;
     let currentUser = null;
 
-    // Функция "Запомнить меня" — сохраняем ID и роль
+    // Функция для уведомлений
+    function showNotification(message, isError = false) {
+        const notif = document.createElement('div');
+        notif.className = 'notification';
+        notif.style.background = isError ? '#c2410c' : '#1e6f5c';
+        notif.innerText = message;
+        document.body.appendChild(notif);
+        setTimeout(() => notif.remove(), 3000);
+    }
+
+    // Сохранение + принудительный рендер всех окон (через событие)
+    function saveAndRefresh() {
+        localStorage.setItem('ev_taxi_passengers', JSON.stringify(passengers));
+        localStorage.setItem('ev_taxi_drivers', JSON.stringify(drivers));
+        localStorage.setItem('ev_taxi_orders', JSON.stringify(orders));
+        localStorage.setItem('ev_taxi_completed', JSON.stringify(completedTrips));
+        // Вызываем рендер для всех открытых вкладок через событие storage
+        window.dispatchEvent(new StorageEvent('storage', { key: 'ev_taxi_update' }));
+        render(); // обновляем текущее окно
+    }
+
+    // Слушаем изменения в localStorage из других вкладок
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'ev_taxi_update' || e.key?.startsWith('ev_taxi_')) {
+            // Перезагружаем данные
+            passengers = JSON.parse(localStorage.getItem('ev_taxi_passengers')) || [];
+            drivers = JSON.parse(localStorage.getItem('ev_taxi_drivers')) || [];
+            orders = JSON.parse(localStorage.getItem('ev_taxi_orders')) || [];
+            completedTrips = JSON.parse(localStorage.getItem('ev_taxi_completed')) || [];
+            render();
+        }
+    });
+
     function saveRememberMe() {
         if (currentUserId && currentRole) {
             localStorage.setItem('ev_remember_id', currentUserId);
@@ -229,13 +125,6 @@
         }
     }
 
-    function saveToStorage() {
-        localStorage.setItem('ev_taxi_passengers', JSON.stringify(passengers));
-        localStorage.setItem('ev_taxi_drivers', JSON.stringify(drivers));
-        localStorage.setItem('ev_taxi_orders', JSON.stringify(orders));
-        localStorage.setItem('ev_taxi_completed', JSON.stringify(completedTrips));
-    }
-
     function getPassengerNameById(id) {
         const p = passengers.find(pass => pass.id === id);
         return p ? p.name : 'Пассажир';
@@ -246,7 +135,7 @@
         return d ? d.name : 'Водитель';
     }
 
-    // ========== РЕНДЕР ==========
+    // ========== ОСНОВНОЙ РЕНДЕР ==========
     function render() {
         const container = document.getElementById('contentArea');
         if (!container) return;
@@ -278,13 +167,15 @@
                 if (existing) {
                     currentUserId = existing.id;
                     currentUser = existing;
+                    showNotification(`С возвращением, ${existing.name}!`);
                 } else {
                     const newId = Date.now();
-                    const newPass = { id: newId, name, phone, addresses: ["Дом, 1"], paymentMethods: [] };
+                    const newPass = { id: newId, name, phone, addresses: ["Мой адрес, 1"], paymentMethods: [] };
                     passengers.push(newPass);
-                    saveToStorage();
+                    saveAndRefresh();
                     currentUserId = newId;
                     currentUser = newPass;
+                    showNotification(`Добро пожаловать, ${name}!`);
                 }
                 if (remember) saveRememberMe(); else localStorage.removeItem('ev_remember_id');
                 render();
@@ -321,14 +212,14 @@
                 <button class="btn" id="createOrderAction">🚖 ЗАКАЗАТЬ</button>
             </div>
             ` : `
-            <div class="card" style="background:#e0f2e9;">
-                <h4>🚕 Активная поездка</h4>
-                <div><strong>Статус:</strong> ${activeOrder.status === 'accepted' ? '✅ Принят' : '⏳ Ожидание'}</div>
-                <div>От: ${activeOrder.fromAddr}</div>
-                <div>До: ${activeOrder.toAddr}</div>
-                <div>${activeOrder.price} ₽</div>
-                ${activeOrder.driverId ? `<div>Водитель: ${getDriverNameById(activeOrder.driverId)}</div>` : ''}
-                ${activeOrder.status === 'accepted' ? `<button id="completePassOrder" class="btn-outline">✅ Завершить</button>` : ''}
+            <div class="active-ride">
+                <h4><i class="fas fa-car-side"></i> Активная поездка</h4>
+                <div><strong>Статус:</strong> ${activeOrder.status === 'accepted' ? '✅ Принят водителем' : '⏳ Ожидание водителя...'}</div>
+                <div>📍 От: ${activeOrder.fromAddr}</div>
+                <div>🏁 До: ${activeOrder.toAddr}</div>
+                <div>💰 ${activeOrder.price} ₽ (${activeOrder.tariff})</div>
+                ${activeOrder.driverId ? `<div>🚗 Водитель: ${getDriverNameById(activeOrder.driverId)}</div>` : '<div>⏳ Ищем ближайшего водителя...</div>'}
+                ${activeOrder.status === 'accepted' ? `<button id="completePassOrder" class="btn-outline" style="margin-top:12px;">✅ Завершить поездку</button>` : ''}
             </div>
             `}
             <div class="flex-between" style="margin-top: 8px;"><label><input type="checkbox" id="rememberMePass" ${localStorage.getItem('ev_remember_id') == currentUserId ? 'checked' : ''}> 🔐 Запомнить меня</label></div>
@@ -345,7 +236,7 @@
                 const idx = parseInt(btn.getAttribute('data-index'));
                 currentUser.paymentMethods.splice(idx, 1);
                 passengers = passengers.map(p => p.id === currentUser.id ? currentUser : p);
-                saveToStorage(); render();
+                saveAndRefresh();
             }));
         }
         document.getElementById('addPaymentBtn')?.addEventListener('click', () => {
@@ -355,7 +246,7 @@
             if (title) {
                 currentUser.paymentMethods.push({ type, title });
                 passengers = passengers.map(p => p.id === currentUser.id ? currentUser : p);
-                saveToStorage(); render();
+                saveAndRefresh();
             }
         });
         // Адреса
@@ -366,32 +257,42 @@
                 const addr = el.getAttribute('data-addr');
                 currentUser.addresses = currentUser.addresses.filter(a => a !== addr);
                 passengers = passengers.map(p => p.id === currentUser.id ? currentUser : p);
-                saveToStorage(); render();
+                saveAndRefresh();
             }));
         }
         document.getElementById('addAddressBtn')?.addEventListener('click', () => {
             const newAddr = document.getElementById('newAddressInput').value.trim();
-            if (newAddr && !currentUser.addresses.includes(newAddr)) { currentUser.addresses.push(newAddr); passengers = passengers.map(p => p.id === currentUser.id ? currentUser : p); saveToStorage(); render(); }
+            if (newAddr && !currentUser.addresses.includes(newAddr)) { currentUser.addresses.push(newAddr); passengers = passengers.map(p => p.id === currentUser.id ? currentUser : p); saveAndRefresh(); }
             else alert("Введите адрес");
         });
         const fromSel = document.getElementById('fromSelect');
         if (fromSel) fromSel.innerHTML = currentUser.addresses.map(addr => `<option value="${addr}">${addr}</option>`).join('');
+        
         document.getElementById('logoutPassengerBtn')?.addEventListener('click', () => { currentUserId = null; localStorage.removeItem('ev_remember_id'); render(); });
+        
         document.getElementById('createOrderAction')?.addEventListener('click', () => {
             const fromAddr = document.getElementById('fromSelect').value, toAddr = document.getElementById('toInput').value.trim(), tariffVal = document.getElementById('tariffSelect').value;
             if (!toAddr) return alert("Куда едем?");
             if (!currentUser.paymentMethods.length) return alert("Добавьте способ оплаты");
-            orders.push({ id: Date.now(), passengerId: currentUserId, fromAddr, toAddr, price: parseInt(tariffVal), tariff: tariffVal === '199' ? 'Econom' : (tariffVal === '320' ? 'Comfort+' : 'Business'), status: 'waiting', driverId: null });
-            saveToStorage(); render(); alert("Заказ создан!");
+            const newOrder = { id: Date.now(), passengerId: currentUserId, fromAddr, toAddr, price: parseInt(tariffVal), tariff: tariffVal === '199' ? 'Econom' : (tariffVal === '320' ? 'Comfort+' : 'Business'), status: 'waiting', driverId: null, createdAt: new Date().toISOString() };
+            orders.push(newOrder);
+            saveAndRefresh();
+            showNotification("✅ Заказ создан! Ждём водителя...");
         });
+        
         document.getElementById('completePassOrder')?.addEventListener('click', () => {
-            if (activeOrder) { orders = orders.filter(o => o.id !== activeOrder.id); saveToStorage(); render(); alert("Поездка завершена!"); }
+            if (activeOrder) { 
+                orders = orders.filter(o => o.id !== activeOrder.id); 
+                saveAndRefresh(); 
+                showNotification("🎉 Поездка завершена! Спасибо!");
+            }
         });
+        
         const rememberBox = document.getElementById('rememberMePass');
         if (rememberBox) rememberBox.addEventListener('change', (e) => { if (e.target.checked) saveRememberMe(); else localStorage.removeItem('ev_remember_id'); });
     }
 
-    // ========== ВОДИТЕЛЬ (расширенные функции) ==========
+    // ========== ВОДИТЕЛЬ ==========
     function renderDriver(container) {
         if (!currentUserId || !drivers.find(d => d.id === currentUserId)) {
             container.innerHTML = `<div class="card"><h3>Регистрация водителя</h3>
@@ -406,8 +307,9 @@
                 if (!name || !car || !plate || !phone) return alert("Заполните всё");
                 const newId = Date.now();
                 const newDriver = { id: newId, name, car, plate, phone, online: true, rating: 5.0, totalEarned: 0, completedOrdersCount: 0 };
-                drivers.push(newDriver); saveToStorage(); currentUserId = newId;
+                drivers.push(newDriver); saveAndRefresh(); currentUserId = newId;
                 if (rem) saveRememberMe(); render();
+                showNotification(`Добро пожаловать, водитель ${name}!`);
             }); return;
         }
         currentUser = drivers.find(d => d.id === currentUserId);
@@ -423,55 +325,84 @@
                 <div class="driver-menu">
                     <button id="toggleStatusBtn" class="btn-outline">${currentUser.online ? '🔴 Выключить онлайн' : '🟢 Включить онлайн'}</button>
                     <button id="editProfileBtn" class="btn-outline">✏️ Редакт. профиль</button>
-                    <button id="showHistoryBtn" class="btn-outline">📜 История поездок</button>
+                    <button id="showHistoryBtn" class="btn-outline">📜 История</button>
                 </div>
-                <div class="status-msg">Статус: <span class="${currentUser.online ? 'status-online' : 'status-offline'}">${currentUser.online ? 'Онлайн' : 'Офлайн'}</span> (показываются заказы)</div>
+                <div>Статус: <span class="${currentUser.online ? 'status-online' : 'status-offline'}">${currentUser.online ? 'Онлайн' : 'Офлайн'}</span></div>
                 <hr>
-                <h4><i class="fas fa-clipboard-list"></i> Реальные заказы</h4>
+                <h4><i class="fas fa-clipboard-list"></i> Доступные заказы (${waitingOrders.length})</h4>
                 <div id="realOrdersContainer"></div>
-                ${myActiveOrder ? `<div class="card" style="margin-top:12px; background:#d9f0ea;"><strong>🚕 ВЕЗУ:</strong> ${myActiveOrder.fromAddr} → ${myActiveOrder.toAddr} | ${myActiveOrder.price} ₽<br>Пассажир: ${getPassengerNameById(myActiveOrder.passengerId)}<button id="completeDriverOrder" class="btn-outline">✅ Завершить</button></div>` : ''}
+                ${myActiveOrder ? `<div class="active-ride" style="margin-top:12px;"><strong>🚕 ВЕЗУ ПАССАЖИРА:</strong><br>${myActiveOrder.fromAddr} → ${myActiveOrder.toAddr}<br>💰 ${myActiveOrder.price} ₽<br>👤 Пассажир: ${getPassengerNameById(myActiveOrder.passengerId)}<button id="completeDriverOrder" class="btn-outline" style="margin-top:10px;">✅ Завершить поездку</button></div>` : ''}
             </div>
-            <div id="historyModalWindow" style="display:none;" class="card"><h4>История поездок</h4><div id="historyList"></div><button id="closeHistory" class="btn-outline">Закрыть</button></div>
+            <div id="historyModal" style="display:none;" class="card"><h4>📜 История поездок</h4><div id="historyList"></div><button id="closeHistory" class="btn-outline">Закрыть</button></div>
             <div class="flex-between" style="margin-top:8px;"><label><input type="checkbox" id="rememberDriverCheckMain" ${localStorage.getItem('ev_remember_id') == currentUserId ? 'checked' : ''}> 🔐 Запомнить меня</label></div>
         `;
 
-        // Заказы
+        // Отображение заказов
         const ordersDiv = document.getElementById('realOrdersContainer');
         if (ordersDiv) {
-            if (waitingOrders.length === 0) ordersDiv.innerHTML = '<div class="warning">Нет активных заказов</div>';
-            else ordersDiv.innerHTML = waitingOrders.map(order => `<div class="payment-method"><div><strong>${getPassengerNameById(order.passengerId)}</strong><br>${order.fromAddr} → ${order.toAddr}<br>${order.tariff} — ${order.price} ₽</div><button class="acceptRealOrder" data-id="${order.id}" class="badge">Принять</button></div>`).join('');
-            document.querySelectorAll('.acceptRealOrder').forEach(btn => btn.addEventListener('click', (e) => {
+            if (waitingOrders.length === 0) ordersDiv.innerHTML = '<div class="warning">😔 Нет активных заказов</div>';
+            else ordersDiv.innerHTML = waitingOrders.map(order => `
+                <div class="order-item">
+                    <div><strong>${getPassengerNameById(order.passengerId)}</strong><br>${order.fromAddr} → ${order.toAddr}<br>${order.tariff} — ${order.price} ₽</div>
+                    <button class="acceptOrderBtn" data-id="${order.id}" class="badge" style="background:#1e6f5c; color:white; padding:8px 16px; border-radius:40px;">🚖 Принять</button>
+                </div>
+            `).join('');
+            document.querySelectorAll('.acceptOrderBtn').forEach(btn => btn.addEventListener('click', (e) => {
                 const oId = parseInt(btn.getAttribute('data-id'));
                 const order = orders.find(o => o.id === oId);
-                if (order && order.status === 'waiting') { order.status = 'accepted'; order.driverId = currentUserId; saveToStorage(); render(); alert("Заказ принят!"); }
+                if (order && order.status === 'waiting') { 
+                    order.status = 'accepted'; 
+                    order.driverId = currentUserId; 
+                    saveAndRefresh(); 
+                    showNotification(`✅ Вы приняли заказ от ${getPassengerNameById(order.passengerId)}!`);
+                }
             }));
         }
-        document.getElementById('toggleStatusBtn')?.addEventListener('click', () => { currentUser.online = !currentUser.online; drivers = drivers.map(d => d.id === currentUser.id ? currentUser : d); saveToStorage(); render(); });
-        document.getElementById('editProfileBtn')?.addEventListener('click', () => {
-            const newCar = prompt("Новый автомобиль", currentUser.car); const newPlate = prompt("Новый госномер", currentUser.plate); const newPhone = prompt("Номер телефона", currentUser.phone);
-            if (newCar) currentUser.car = newCar; if (newPlate) currentUser.plate = newPlate; if (newPhone) currentUser.phone = newPhone;
-            drivers = drivers.map(d => d.id === currentUser.id ? currentUser : d); saveToStorage(); render();
+
+        document.getElementById('toggleStatusBtn')?.addEventListener('click', () => { 
+            currentUser.online = !currentUser.online; 
+            drivers = drivers.map(d => d.id === currentUser.id ? currentUser : d); 
+            saveAndRefresh(); 
+            showNotification(currentUser.online ? '🟢 Вы онлайн, заказы видны' : '🔴 Вы офлайн, заказы не поступают');
         });
+        
+        document.getElementById('editProfileBtn')?.addEventListener('click', () => {
+            const newCar = prompt("Новый автомобиль", currentUser.car); 
+            const newPlate = prompt("Новый госномер", currentUser.plate); 
+            const newPhone = prompt("Номер телефона", currentUser.phone);
+            if (newCar) currentUser.car = newCar; 
+            if (newPlate) currentUser.plate = newPlate; 
+            if (newPhone) currentUser.phone = newPhone;
+            drivers = drivers.map(d => d.id === currentUser.id ? currentUser : d); 
+            saveAndRefresh();
+            showNotification("Профиль обновлён");
+        });
+        
         document.getElementById('showHistoryBtn')?.addEventListener('click', () => {
-            const histDiv = document.getElementById('historyModalWindow'); const listDiv = document.getElementById('historyList');
+            const histDiv = document.getElementById('historyModal'); 
+            const listDiv = document.getElementById('historyList');
             if (histDiv && listDiv) {
                 if (myCompleted.length === 0) listDiv.innerHTML = '<div class="warning">Нет завершённых поездок</div>';
-                else listDiv.innerHTML = myCompleted.map(t => `<div class="history-item">${t.fromAddr} → ${t.toAddr} | ${t.price} ₽ | ${new Date(t.date).toLocaleString()}</div>`).join('');
+                else listDiv.innerHTML = myCompleted.map(t => `<div class="payment-method">${t.fromAddr} → ${t.toAddr} | ${t.price} ₽ | ${new Date(t.date).toLocaleString()}</div>`).join('');
                 histDiv.style.display = 'block';
             }
         });
-        document.getElementById('closeHistory')?.addEventListener('click', () => { document.getElementById('historyModalWindow').style.display = 'none'; });
+        
+        document.getElementById('closeHistory')?.addEventListener('click', () => { document.getElementById('historyModal').style.display = 'none'; });
+        
         document.getElementById('completeDriverOrder')?.addEventListener('click', () => {
             if (myActiveOrder) {
                 completedTrips.push({ ...myActiveOrder, driverId: currentUserId, date: new Date().toISOString() });
-                currentUser.totalEarned = (currentUser.totalEarned || 0) + myActiveOrder.price;
                 currentUser.completedOrdersCount = (currentUser.completedOrdersCount || 0) + 1;
                 drivers = drivers.map(d => d.id === currentUser.id ? currentUser : d);
                 orders = orders.filter(o => o.id !== myActiveOrder.id);
-                saveToStorage(); render(); alert("Поездка завершена, деньги зачислены!");
+                saveAndRefresh();
+                showNotification(`💰 Поездка завершена! +${myActiveOrder.price} ₽`);
             }
         });
+        
         document.getElementById('logoutDriverBtn')?.addEventListener('click', () => { currentUserId = null; localStorage.removeItem('ev_remember_id'); render(); });
+        
         const remDriver = document.getElementById('rememberDriverCheckMain');
         if (remDriver) remDriver.addEventListener('change', (e) => { if (e.target.checked) saveRememberMe(); else localStorage.removeItem('ev_remember_id'); });
     }
@@ -491,9 +422,17 @@
     function init() {
         if (!passengers.length) passengers.push({ id: 1001, name: "Тест Пассажир", phone: "+79990001122", addresses: ["Центральная 5"], paymentMethods: [{ type: "card", title: "•••• 1111" }] });
         if (!drivers.length) drivers.push({ id: 2001, name: "Демо Водитель", car: "Tesla Model 3", plate: "Е 001КХ 77", phone: "+79161234567", online: true, rating: 4.98, totalEarned: 0, completedOrdersCount: 0 });
-        saveToStorage();
+        saveAndRefresh();
         loadRememberMe();
         render();
+        // Периодическая проверка (на случай, если storage не сработал)
+        setInterval(() => {
+            const newOrders = JSON.parse(localStorage.getItem('ev_taxi_orders')) || [];
+            if (JSON.stringify(newOrders) !== JSON.stringify(orders)) {
+                orders = newOrders;
+                render();
+            }
+        }, 500);
     }
     init();
 </script>
