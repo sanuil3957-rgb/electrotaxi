@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <title>Электро Такси — Реальные люди + Запомнить меня</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        body {
+            background: #0a1424;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 16px;
+        }
+        .app {
+            max-width: 500px;
+            width: 100%;
+            background: #fff;
+            border-radius: 44px;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.3);
+            overflow: hidden;
+            min-height: 720px;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            padding: 20px 20px 12px;
+            background: white;
+            border-bottom: 1px solid #eef2ff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo h2 {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0b3b3f, #1e8f6e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .role-switch {
+            background: #f0f4f9;
+            border-radius: 40px;
+            padding: 4px;
+            display: flex;
+            gap: 6px;
+        }
+        .role-btn {
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            transition: 0.2s;
+        }
+        .role-btn.active {
+            background: #1e6f5c;
+            color: white;
+        }
+        .content {
+            flex: 1;
+            padding: 16px 20px;
+            overflow-y: auto;
+            max-height: 620px;
+        }
+        .card {
+            background: #f9fafc;
+            border-radius: 28px;
+            padding: 18px;
+            margin-bottom: 20px;
+            border: 1px solid #eef2ff;
+        }
+        .input-group {
+            margin-bottom: 14px;
+        }
+        .input-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 60px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            font-size: 14px;
+        }
+        .btn {
+            background: #1e6f5c;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 60px;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 8px;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #1e6f5c;
+            color: #1e6f5c;
+        }
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .badge {
+            font-size: 11px;
+            background: #e6f7f0;
+            padding: 4px 12px;
+            border-radius: 50px;
+            color: #1e6f5c;
+        }
+        .payment-method, .history-item {
+            background: white;
+            border-radius: 16px;
+            padding: 10px;
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e2e8f0;
+        }
+        .warning {
+            text-align: center;
+            color: #e67e22;
+            font-size: 13px;
+            margin-top: 12px;
+        }
+        .success {
+            color: #1e6f5c;
+            font-weight: 600;
+        }
+        hr {
+            margin: 12px 0;
+        }
+        .driver-menu {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+        .driver-menu button {
+            flex: 1;
+            padding: 8px;
+            font-size: 12px;
+        }
+        .status-online {
+            color: #10b981;
+            font-weight: bold;
+        }
+        .status-offline {
+            color: #ef4444;
+        }
+    </style>
+</head>
+<body>
+<div class="app" id="app">
+    <div class="header">
+        <div class="logo"><h2>Электро Такси ⚡</h2></div>
+        <div class="role-switch" id="roleSwitch">
+            <button class="role-btn active" data-role="passenger">👤 Пассажир</button>
+            <button class="role-btn" data-role="driver">🚗 Водитель</button>
+        </div>
+    </div>
+    <div class="content" id="contentArea"></div>
+</div>
+
+<script>
+    // ========== ХРАНИЛИЩЕ ==========
+    let passengers = JSON.parse(localStorage.getItem('ev_taxi_passengers')) || [];
+    let drivers = JSON.parse(localStorage.getItem('ev_taxi_drivers')) || [];
+    let orders = JSON.parse(localStorage.getItem('ev_taxi_orders')) || [];
+    let completedTrips = JSON.parse(localStorage.getItem('ev_taxi_completed')) || []; // история для водителей
+
+    let currentRole = 'passenger';
+    let currentUserId = null;
+    let currentUser = null;
+
+    // Функция "Запомнить меня" — сохраняем ID и роль
+    function saveRememberMe() {
+        if (currentUserId && currentRole) {
+            localStorage.setItem('ev_remember_id', currentUserId);
+            localStorage.setItem('ev_remember_role', currentRole);
+        } else {
+            localStorage.removeItem('ev_remember_id');
+            localStorage.removeItem('ev_remember_role');
+        }
+    }
+
+    function loadRememberMe() {
+        const savedId = localStorage.getItem('ev_remember_id');
+        const savedRole = localStorage.getItem('ev_remember_role');
+        if (savedId && savedRole) {
+            if (savedRole === 'passenger' && passengers.find(p => p.id == savedId)) {
+                currentUserId = parseInt(savedId);
+                currentRole = 'passenger';
+                document.querySelectorAll('.role-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.getAttribute('data-role') === 'passenger') btn.classList.add('active');
+                });
+            } else if (savedRole === 'driver' && drivers.find(d => d.id == savedId)) {
+                currentUserId = parseInt(savedId);
+                currentRole = 'driver';
+                document.querySelectorAll('.role-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.getAttribute('data-role') === 'driver') btn.classList.add('active');
+                });
+            }
+        }
+    }
+
+    function saveToStorage() {
+        localStorage.setItem('ev_taxi_passengers', JSON.stringify(passengers));
+        localStorage.setItem('ev_taxi_drivers', JSON.stringify(drivers));
+        localStorage.setItem('ev_taxi_orders', JSON.stringify(orders));
+        localStorage.setItem('ev_taxi_completed', JSON.stringify(completedTrips));
+    }
+
+    function getPassengerNameById(id) {
+        const p = passengers.find(pass => pass.id === id);
+        return p ? p.name : 'Пассажир';
+    }
+
+    function getDriverNameById(id) {
+        const d = drivers.find(drv => drv.id === id);
+        return d ? d.name : 'Водитель';
+    }
+
+    // ========== РЕНДЕР ==========
+    function render() {
+        const container = document.getElementById('contentArea');
+        if (!container) return;
+        if (currentRole === 'passenger') {
+            renderPassenger(container);
+        } else {
+            renderDriver(container);
+        }
+    }
+
+    // ========== ПАССАЖИР ==========
+    function renderPassenger(container) {
+        if (!currentUserId || !passengers.find(p => p.id === currentUserId)) {
+            container.innerHTML = `
+                <div class="card">
+                    <h3><i class="fas fa-user-plus"></i> Пассажир</h3>
+                    <div class="input-group"><label>Имя</label><input id="passName" placeholder="Настоящее имя"></div>
+                    <div class="input-group"><label>Телефон</label><input id="passPhone" placeholder="+7 XXX XXX-XX-XX"></div>
+                    <div class="flex-between"><label><input type="checkbox" id="rememberMeCheck"> 🔐 Запомнить меня</label></div>
+                    <button class="btn" id="registerPassengerBtn">Войти / Регистрация</button>
+                </div>
+            `;
+            document.getElementById('registerPassengerBtn')?.addEventListener('click', () => {
+                const name = document.getElementById('passName').value.trim();
+                const phone = document.getElementById('passPhone').value.trim();
+                const remember = document.getElementById('rememberMeCheck')?.checked;
+                if (!name || !phone) return alert("Заполните имя и телефон");
+                let existing = passengers.find(p => p.phone === phone);
+                if (existing) {
+                    currentUserId = existing.id;
+                    currentUser = existing;
+                } else {
+                    const newId = Date.now();
+                    const newPass = { id: newId, name, phone, addresses: ["Дом, 1"], paymentMethods: [] };
+                    passengers.push(newPass);
+                    saveToStorage();
+                    currentUserId = newId;
+                    currentUser = newPass;
+                }
+                if (remember) saveRememberMe(); else localStorage.removeItem('ev_remember_id');
+                render();
+            });
+            return;
+        }
+
+        currentUser = passengers.find(p => p.id === currentUserId);
+        const userOrders = orders.filter(o => o.passengerId === currentUserId);
+        const activeOrder = userOrders.find(o => o.status === 'accepted' || o.status === 'waiting');
+
+        container.innerHTML = `
+            <div class="card">
+                <div class="flex-between">
+                    <div><i class="fas fa-user-circle"></i> <strong>${currentUser.name}</strong><br><small>${currentUser.phone}</small></div>
+                    <button id="logoutPassengerBtn" class="badge" style="background:#ffebeb;">🚪 Выйти</button>
+                </div>
+                <hr>
+                <div class="flex-between"><h4><i class="fas fa-credit-card"></i> Оплата</h4><button id="addPaymentBtn" class="badge">+ Добавить</button></div>
+                <div id="paymentMethodsList"></div>
+                <hr>
+                <h4><i class="fas fa-map-marker-alt"></i> Адреса</h4>
+                <div id="addressListPass"></div>
+                <div class="input-group"><input id="newAddressInput" placeholder="Новый адрес"><button id="addAddressBtn" class="btn-outline" style="margin-top:5px;">+</button></div>
+            </div>
+            ${!activeOrder ? `
+            <div class="card">
+                <h4><i class="fas fa-taxi"></i> Новый заказ</h4>
+                <div class="input-group"><label>Откуда</label><select id="fromSelect"></select></div>
+                <div class="input-group"><label>Куда</label><input id="toInput" placeholder="Адрес назначения"></div>
+                <div class="input-group"><label>Тариф</label><select id="tariffSelect">
+                    <option value="199">Econom (199 ₽)</option><option value="320">Comfort+ (320 ₽)</option><option value="490">Business EV (490 ₽)</option>
+                </select></div>
+                <button class="btn" id="createOrderAction">🚖 ЗАКАЗАТЬ</button>
+            </div>
+            ` : `
+            <div class="card" style="background:#e0f2e9;">
+                <h4>🚕 Активная поездка</h4>
+                <div><strong>Статус:</strong> ${activeOrder.status === 'accepted' ? '✅ Принят' : '⏳ Ожидание'}</div>
+                <div>От: ${activeOrder.fromAddr}</div>
+                <div>До: ${activeOrder.toAddr}</div>
+                <div>${activeOrder.price} ₽</div>
+                ${activeOrder.driverId ? `<div>Водитель: ${getDriverNameById(activeOrder.driverId)}</div>` : ''}
+                ${activeOrder.status === 'accepted' ? `<button id="completePassOrder" class="btn-outline">✅ Завершить</button>` : ''}
+            </div>
+            `}
+            <div class="flex-between" style="margin-top: 8px;"><label><input type="checkbox" id="rememberMePass" ${localStorage.getItem('ev_remember_id') == currentUserId ? 'checked' : ''}> 🔐 Запомнить меня</label></div>
+        `;
+
+        // Оплата
+        const payDiv = document.getElementById('paymentMethodsList');
+        if (payDiv) {
+            if (!currentUser.paymentMethods.length) payDiv.innerHTML = '<div class="warning">Нет способов оплаты, добавьте</div>';
+            else payDiv.innerHTML = currentUser.paymentMethods.map((pm, idx) => `
+                <div class="payment-method"><span><i class="fas ${pm.type === 'card' ? 'fa-credit-card' : (pm.type === 'cash' ? 'fa-money-bill' : 'fa-apple')}"></i> ${pm.title}</span><button class="badge deletePayment" data-index="${idx}">Удалить</button></div>
+            `).join('');
+            document.querySelectorAll('.deletePayment').forEach(btn => btn.addEventListener('click', (e) => {
+                const idx = parseInt(btn.getAttribute('data-index'));
+                currentUser.paymentMethods.splice(idx, 1);
+                passengers = passengers.map(p => p.id === currentUser.id ? currentUser : p);
+                saveToStorage(); render();
+            }));
+        }
+        document.getElementById('addPaymentBtn')?.addEventListener('click', () => {
+            let type = prompt("Тип: card (карта), cash (наличные), apple (Apple Pay)");
+            if (!type) return;
+            let title = type === 'card' ? prompt("Последние 4 цифры карты") : (type === 'cash' ? "Наличные" : "Apple Pay");
+            if (title) {
+                currentUser.paymentMethods.push({ type, title });
+                passengers = passengers.map(p => p.id === currentUser.id ? currentUser : p);
+                saveToStorage(); render();
+            }
+        });
+        // Адреса
+        const addrCont = document.getElementById('addressListPass');
+        if (addrCont) {
+            addrCont.innerHTML = currentUser.addresses.map(addr => `<div class="badge" style="margin:4px;display:inline-block;">📍 ${addr} <span class="delAddr" data-addr="${addr}" style="cursor:pointer;">❌</span></div>`).join('');
+            document.querySelectorAll('.delAddr').forEach(el => el.addEventListener('click', (e) => {
+                const addr = el.getAttribute('data-addr');
+                currentUser.addresses = currentUser.addresses.filter(a => a !== addr);
+                passengers = passengers.map(p => p.id === currentUser.id ? currentUser : p);
+                saveToStorage(); render();
+            }));
+        }
+        document.getElementById('addAddressBtn')?.addEventListener('click', () => {
+            const newAddr = document.getElementById('newAddressInput').value.trim();
+            if (newAddr && !currentUser.addresses.includes(newAddr)) { currentUser.addresses.push(newAddr); passengers = passengers.map(p => p.id === currentUser.id ? currentUser : p); saveToStorage(); render(); }
+            else alert("Введите адрес");
+        });
+        const fromSel = document.getElementById('fromSelect');
+        if (fromSel) fromSel.innerHTML = currentUser.addresses.map(addr => `<option value="${addr}">${addr}</option>`).join('');
+        document.getElementById('logoutPassengerBtn')?.addEventListener('click', () => { currentUserId = null; localStorage.removeItem('ev_remember_id'); render(); });
+        document.getElementById('createOrderAction')?.addEventListener('click', () => {
+            const fromAddr = document.getElementById('fromSelect').value, toAddr = document.getElementById('toInput').value.trim(), tariffVal = document.getElementById('tariffSelect').value;
+            if (!toAddr) return alert("Куда едем?");
+            if (!currentUser.paymentMethods.length) return alert("Добавьте способ оплаты");
+            orders.push({ id: Date.now(), passengerId: currentUserId, fromAddr, toAddr, price: parseInt(tariffVal), tariff: tariffVal === '199' ? 'Econom' : (tariffVal === '320' ? 'Comfort+' : 'Business'), status: 'waiting', driverId: null });
+            saveToStorage(); render(); alert("Заказ создан!");
+        });
+        document.getElementById('completePassOrder')?.addEventListener('click', () => {
+            if (activeOrder) { orders = orders.filter(o => o.id !== activeOrder.id); saveToStorage(); render(); alert("Поездка завершена!"); }
+        });
+        const rememberBox = document.getElementById('rememberMePass');
+        if (rememberBox) rememberBox.addEventListener('change', (e) => { if (e.target.checked) saveRememberMe(); else localStorage.removeItem('ev_remember_id'); });
+    }
+
+    // ========== ВОДИТЕЛЬ (расширенные функции) ==========
+    function renderDriver(container) {
+        if (!currentUserId || !drivers.find(d => d.id === currentUserId)) {
+            container.innerHTML = `<div class="card"><h3>Регистрация водителя</h3>
+                <div class="input-group"><label>Имя</label><input id="dName"></div>
+                <div class="input-group"><label>Авто</label><input id="dCar"></div>
+                <div class="input-group"><label>Госномер</label><input id="dPlate"></div>
+                <div class="input-group"><label>Телефон</label><input id="dPhone"></div>
+                <div class="flex-between"><label><input type="checkbox" id="rememberDriverCheck"> Запомнить меня</label></div>
+                <button class="btn" id="regDriverBtn">Стать водителем</button></div>`;
+            document.getElementById('regDriverBtn')?.addEventListener('click', () => {
+                const name = document.getElementById('dName').value.trim(), car = document.getElementById('dCar').value.trim(), plate = document.getElementById('dPlate').value.trim(), phone = document.getElementById('dPhone').value.trim(), rem = document.getElementById('rememberDriverCheck')?.checked;
+                if (!name || !car || !plate || !phone) return alert("Заполните всё");
+                const newId = Date.now();
+                const newDriver = { id: newId, name, car, plate, phone, online: true, rating: 5.0, totalEarned: 0, completedOrdersCount: 0 };
+                drivers.push(newDriver); saveToStorage(); currentUserId = newId;
+                if (rem) saveRememberMe(); render();
+            }); return;
+        }
+        currentUser = drivers.find(d => d.id === currentUserId);
+        const waitingOrders = orders.filter(o => o.status === 'waiting' && (currentUser.online === true));
+        const myActiveOrder = orders.find(o => o.driverId === currentUserId && o.status === 'accepted');
+        const myCompleted = completedTrips.filter(t => t.driverId === currentUserId);
+        const totalEarned = myCompleted.reduce((sum, t) => sum + t.price, 0);
+
+        container.innerHTML = `
+            <div class="card">
+                <div class="flex-between"><div><i class="fas fa-user-check"></i> <strong>${currentUser.name}</strong><br><small>${currentUser.car} • ${currentUser.plate}</small></div><button id="logoutDriverBtn" class="badge" style="background:#ffebeb;">Выйти</button></div>
+                <div class="flex-between"><span>⭐ Рейтинг: ${currentUser.rating}</span><span>💰 Заработано: ${totalEarned} ₽</span><span>🚖 Поездок: ${currentUser.completedOrdersCount || 0}</span></div>
+                <div class="driver-menu">
+                    <button id="toggleStatusBtn" class="btn-outline">${currentUser.online ? '🔴 Выключить онлайн' : '🟢 Включить онлайн'}</button>
+                    <button id="editProfileBtn" class="btn-outline">✏️ Редакт. профиль</button>
+                    <button id="showHistoryBtn" class="btn-outline">📜 История поездок</button>
+                </div>
+                <div class="status-msg">Статус: <span class="${currentUser.online ? 'status-online' : 'status-offline'}">${currentUser.online ? 'Онлайн' : 'Офлайн'}</span> (показываются заказы)</div>
+                <hr>
+                <h4><i class="fas fa-clipboard-list"></i> Реальные заказы</h4>
+                <div id="realOrdersContainer"></div>
+                ${myActiveOrder ? `<div class="card" style="margin-top:12px; background:#d9f0ea;"><strong>🚕 ВЕЗУ:</strong> ${myActiveOrder.fromAddr} → ${myActiveOrder.toAddr} | ${myActiveOrder.price} ₽<br>Пассажир: ${getPassengerNameById(myActiveOrder.passengerId)}<button id="completeDriverOrder" class="btn-outline">✅ Завершить</button></div>` : ''}
+            </div>
+            <div id="historyModalWindow" style="display:none;" class="card"><h4>История поездок</h4><div id="historyList"></div><button id="closeHistory" class="btn-outline">Закрыть</button></div>
+            <div class="flex-between" style="margin-top:8px;"><label><input type="checkbox" id="rememberDriverCheckMain" ${localStorage.getItem('ev_remember_id') == currentUserId ? 'checked' : ''}> 🔐 Запомнить меня</label></div>
+        `;
+
+        // Заказы
+        const ordersDiv = document.getElementById('realOrdersContainer');
+        if (ordersDiv) {
+            if (waitingOrders.length === 0) ordersDiv.innerHTML = '<div class="warning">Нет активных заказов</div>';
+            else ordersDiv.innerHTML = waitingOrders.map(order => `<div class="payment-method"><div><strong>${getPassengerNameById(order.passengerId)}</strong><br>${order.fromAddr} → ${order.toAddr}<br>${order.tariff} — ${order.price} ₽</div><button class="acceptRealOrder" data-id="${order.id}" class="badge">Принять</button></div>`).join('');
+            document.querySelectorAll('.acceptRealOrder').forEach(btn => btn.addEventListener('click', (e) => {
+                const oId = parseInt(btn.getAttribute('data-id'));
+                const order = orders.find(o => o.id === oId);
+                if (order && order.status === 'waiting') { order.status = 'accepted'; order.driverId = currentUserId; saveToStorage(); render(); alert("Заказ принят!"); }
+            }));
+        }
+        document.getElementById('toggleStatusBtn')?.addEventListener('click', () => { currentUser.online = !currentUser.online; drivers = drivers.map(d => d.id === currentUser.id ? currentUser : d); saveToStorage(); render(); });
+        document.getElementById('editProfileBtn')?.addEventListener('click', () => {
+            const newCar = prompt("Новый автомобиль", currentUser.car); const newPlate = prompt("Новый госномер", currentUser.plate); const newPhone = prompt("Номер телефона", currentUser.phone);
+            if (newCar) currentUser.car = newCar; if (newPlate) currentUser.plate = newPlate; if (newPhone) currentUser.phone = newPhone;
+            drivers = drivers.map(d => d.id === currentUser.id ? currentUser : d); saveToStorage(); render();
+        });
+        document.getElementById('showHistoryBtn')?.addEventListener('click', () => {
+            const histDiv = document.getElementById('historyModalWindow'); const listDiv = document.getElementById('historyList');
+            if (histDiv && listDiv) {
+                if (myCompleted.length === 0) listDiv.innerHTML = '<div class="warning">Нет завершённых поездок</div>';
+                else listDiv.innerHTML = myCompleted.map(t => `<div class="history-item">${t.fromAddr} → ${t.toAddr} | ${t.price} ₽ | ${new Date(t.date).toLocaleString()}</div>`).join('');
+                histDiv.style.display = 'block';
+            }
+        });
+        document.getElementById('closeHistory')?.addEventListener('click', () => { document.getElementById('historyModalWindow').style.display = 'none'; });
+        document.getElementById('completeDriverOrder')?.addEventListener('click', () => {
+            if (myActiveOrder) {
+                completedTrips.push({ ...myActiveOrder, driverId: currentUserId, date: new Date().toISOString() });
+                currentUser.totalEarned = (currentUser.totalEarned || 0) + myActiveOrder.price;
+                currentUser.completedOrdersCount = (currentUser.completedOrdersCount || 0) + 1;
+                drivers = drivers.map(d => d.id === currentUser.id ? currentUser : d);
+                orders = orders.filter(o => o.id !== myActiveOrder.id);
+                saveToStorage(); render(); alert("Поездка завершена, деньги зачислены!");
+            }
+        });
+        document.getElementById('logoutDriverBtn')?.addEventListener('click', () => { currentUserId = null; localStorage.removeItem('ev_remember_id'); render(); });
+        const remDriver = document.getElementById('rememberDriverCheckMain');
+        if (remDriver) remDriver.addEventListener('change', (e) => { if (e.target.checked) saveRememberMe(); else localStorage.removeItem('ev_remember_id'); });
+    }
+
+    function setRole(role) {
+        currentRole = role;
+        if (role === 'driver' && (!currentUserId || !drivers.find(d => d.id === currentUserId))) currentUserId = null;
+        if (role === 'passenger' && (!currentUserId || !passengers.find(p => p.id === currentUserId))) currentUserId = null;
+        render();
+    }
+
+    document.getElementById('roleSwitch')?.addEventListener('click', (e) => {
+        const btn = e.target.closest('.role-btn');
+        if (btn) { document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); setRole(btn.getAttribute('data-role')); }
+    });
+
+    function init() {
+        if (!passengers.length) passengers.push({ id: 1001, name: "Тест Пассажир", phone: "+79990001122", addresses: ["Центральная 5"], paymentMethods: [{ type: "card", title: "•••• 1111" }] });
+        if (!drivers.length) drivers.push({ id: 2001, name: "Демо Водитель", car: "Tesla Model 3", plate: "Е 001КХ 77", phone: "+79161234567", online: true, rating: 4.98, totalEarned: 0, completedOrdersCount: 0 });
+        saveToStorage();
+        loadRememberMe();
+        render();
+    }
+    init();
+</script>
+</body>
+</html>
